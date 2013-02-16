@@ -52,7 +52,7 @@ namespace CanvasClasses
          *  use HMAC SHA-256 algorith to hash the Base64 encoded context (string[1]) and sign it using your consumer secret
          *  Compare the Base64 encoded string with the hashed Base64 context signed with the consumer secret
          */
-        public CanvasRequest verifyAndDecode(String signedRequest, String secret) 
+        public static CanvasRequest verifyAndDecode(String signedRequest, String secret) 
         {
             CanvasRequest returnCanvasRequest = new CanvasRequest();
 
@@ -86,6 +86,9 @@ namespace CanvasClasses
             String[] split = getParts(signedRequest);
             if (split.Length == 2)
             {
+                encodedSignature = split[0];
+                encodedPayload = split[1];
+
                 if (verify(secret, encodedPayload, encodedSignature))
                 {
                     byte[] encodedDataAsBytes = System.Convert.FromBase64String(encodedPayload);
