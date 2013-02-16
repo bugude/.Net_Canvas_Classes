@@ -29,7 +29,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace SalesforceREST
+namespace CanvasClasses
 {
     /**
  * Describes all contextual information around external references, or links to external resources.

@@ -32,7 +32,7 @@ using Newtonsoft.Json;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace SalesforceREST
+namespace CanvasClasses
 {
  /*
  *

@@ -30,7 +30,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.ComponentModel;
 
-namespace SalesforceREST
+namespace CanvasClasses
 {    
     public class CanvasRequest {
         //The algorithm used to sign the request. typically HMAC-SHA256  
