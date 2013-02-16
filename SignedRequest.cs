@@ -56,23 +56,23 @@ namespace CanvasClasses
         {
             CanvasRequest returnCanvasRequest = new CanvasRequest();
 
-            String encodedSignature = "";
-            String encodedPayload = "";
-            String[] split = getParts(signedRequest);
+            String decodedSignature = "";
+            String decodedPayload = "";
+            String[] split = getParts(Uri.UnescapeDataString(signedRequest));//decode signedRequest before processing
             if(split.Length==2) 
             {
-                encodedSignature = split[0];
-                encodedPayload = split[1];
-                
-                if (verify(secret, encodedPayload, encodedSignature))
+                decodedSignature = split[0];
+                decodedPayload = split[1];
+
+                if (verify(secret, decodedPayload, decodedSignature))
                 {
-                    byte[] encodedDataAsBytes = System.Convert.FromBase64String(encodedPayload);
-                    string decodedPayload = System.Text.Encoding.UTF8.GetString(encodedDataAsBytes);
+                    byte[] encodedDataAsBytes = System.Convert.FromBase64String(decodedPayload);
+                    string jsonData = System.Text.Encoding.UTF8.GetString(encodedDataAsBytes);
 
                     //populate the CanvasRequest object based on this JSON payload
                     //returnCanvasRequest.client;
                     Newtonsoft.Json.JsonSerializer js = new JsonSerializer();
-                    JsonTextReader reader = new JsonTextReader(new StringReader(decodedPayload));
+                    JsonTextReader reader = new JsonTextReader(new StringReader(jsonData));
                     returnCanvasRequest = js.Deserialize<CanvasRequest>(reader);  
                 } 
             }             
