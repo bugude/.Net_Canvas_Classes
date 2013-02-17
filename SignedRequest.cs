@@ -81,17 +81,17 @@ namespace CanvasClasses
         
         public static String verifyAndDecodeAsJson(String signedRequest, String secret) 
         {
-            String encodedSignature = "";
-            String encodedPayload = "";
-            String[] split = getParts(signedRequest);
+            String decodedSignature = "";
+            String decodedPayload = "";
+            String[] split = getParts(Uri.UnescapeDataString(signedRequest));//decode signedRequest before processing
             if (split.Length == 2)
             {
-                encodedSignature = split[0];
-                encodedPayload = split[1];
+                decodedSignature = split[0];
+                decodedPayload = split[1];
 
-                if (verify(secret, encodedPayload, encodedSignature))
+                if (verify(secret, decodedPayload, decodedSignature))
                 {
-                    byte[] encodedDataAsBytes = System.Convert.FromBase64String(encodedPayload);
+                    byte[] encodedDataAsBytes = System.Convert.FromBase64String(decodedPayload);
                     return System.Text.Encoding.UTF8.GetString(encodedDataAsBytes);
                 }
                 else
